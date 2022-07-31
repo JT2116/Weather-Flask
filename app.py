@@ -29,7 +29,7 @@ def index():
     conn.close()
 
     # city = 'London'
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=b65498bd83bb91eaf34edf249595fdac'
+    url = ''
 
     # r = requests.get(url.format(city)).json()
     
