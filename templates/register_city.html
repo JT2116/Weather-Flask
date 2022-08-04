@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<form action="{{ url_for('registers_city') }}" method="POST">
+
+    <br>
+    
+    <h1>Register the city</h1>
+
+    <div>
+        {{form.nombreCiudad(class="buscador")}}
+    </div>
+
+    <div>
+        {{form.submit(id="boton")}}        
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li> {{ messages }} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+
+    
+</form>
+
+{% endblock %}

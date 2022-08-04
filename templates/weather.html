@@ -1,24 +1,37 @@
 {% extends "layout.html" %}
 {% block body %}
-<section>
-    <article class="buscar">
-        <input type="search" name="ciudad" class="buscador">
-    </article>        
-    <article class="cards">
-    {% for clima in climas %}        
-        <a id="resultados" class="card" href="{{ url_for('data_city',city=clima.city) }}">
-            <figure>            
-                <img src="http://openweathermap.org/img/w/{{clima.icon}}.png" alt="Image">
-                <p>
-                    <figcaption class="ciudad">{{clima.city}}</figcaption>
-                    <br>
-                    <span class="temp">{{clima.temperature}}° F</span>
-                    <br> {{clima.description}}
-                </p>
-            </figure>
+
+<article class="buscar">
+    
+    <div>
+        <a href="{{ url_for('registers_city') }}">
+            <button id="boton" href="{{ url_for('registers_city') }}">Register new city</button>
         </a>
-    {% endfor %}
-    </article>
-</section>
+    </div>
+
+    <div>
+        <input type="search" name="ciudad" class="buscador">
+    </div>
+    
+</article>
+
+
+
+<article class="cards">
+{% for clima in climas %}        
+    <a id="resultados" class="card" href="{{ url_for('data_city',city=clima.city) }}">
+        <figure>            
+            <img src="http://openweathermap.org/img/w/{{clima.icon}}.png" alt="Image">
+            <p>
+                <figcaption class="ciudad">{{clima.city}}</figcaption>
+                <br>
+                <span class="temp">{{clima.temperature}}° F</span>
+                <br> {{clima.description}}
+            </p>
+        </figure>
+    </a>
+{% endfor %}
+</article>
+
 {% endblock %}
 
