@@ -3,9 +3,14 @@ from distutils.command.config import config
 from pip import main
 from requests import request
 import requests
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for, redirect, request, flash, current_app
 import mariadb
+from forms import registerCity
+import os
+
 app = app = Flask(__name__)
+SECRET_KEY = os.urandom(32)
+app.config['SECRET_KEY'] = SECRET_KEY
 
 config = { # Configuracion para la base de datos
     'user': 'root',
@@ -29,7 +34,7 @@ def index():
     conn.close()
 
     # city = 'London'
-    url = ''
+    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=b65498bd83bb91eaf34edf249595fdac'
 
     # r = requests.get(url.format(city)).json()
     
@@ -70,7 +75,46 @@ def data_city(city):
 
     return render_template('data_weather.html',clima = clima)
 
+@app.route("/register",methods=['GET','POST'])
+def registers_city():
 
+    if request.method == 'POST':
+        newCity =  request.form.get('nombreCiudad')
+        # print(newCity)
+        conn = mariadb.connect(**config)
+        cur = conn.cursor()
+        
+        cur.execute("select count(Nombre) from ciudades where Nombre = ?",(newCity,))
+        cities = cur.fetchall()
+
+        Bcities = format(cities[0][0])
+
+        if Bcities == '0':
+            cur.execute("insert into Ciudades (Nombre) values (?)",(newCity,))                   
+            conn.commit()
+        else:
+
+            success_message = 'That country is already registered'
+            flash(success_message)
+
+            cur.close()
+            conn.close()
+
+            return render_template('register_city.html',form = registerCity())
+
+
+            
+
+        cur.close()
+        conn.close()
+
+
+
+        return redirect(url_for('index'))
+
+    
+
+    return render_template('register_city.html',form = registerCity())
 
 
 
