@@ -34,7 +34,7 @@ def index():
     conn.close()
 
     # city = 'London'
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=b65498bd83bb91eaf34edf249595fdac'
+    url = 'API openweathermap'
 
     # r = requests.get(url.format(city)).json()
     
@@ -57,7 +57,7 @@ def index():
 @app.route("/data_<city>")
 def data_city(city):
     # print(city)
-    url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=b65498bd83bb91eaf34edf249595fdac'
+    url = 'API openweathermap'
 
     r = requests.get(url.format(city)).json()
     
